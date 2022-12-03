@@ -54,17 +54,12 @@ func main() {
 	length := len(file_content)
 	total_points = 0
 	for i := 0; i < length; i += 3 {
-		common_chars := GetCommonChars(file_content[i], file_content[i+1])
-		common_chars_1 := GetCommonChars(file_content[i+1], file_content[i+2])
-		var char_point int
-		for _, s := range common_chars {
-			common_char := strings.Index(common_chars_1, string(s))
-			if common_char != -1 {
-				char_point = CharToPoints(common_chars_1[common_char])
+		for _, s := range file_content[i] {
+			if strings.ContainsRune(file_content[i+1], s) && strings.ContainsRune(file_content[i+2], s) {
+				total_points += CharToPoints(byte(s))
 				break
 			}
 		}
-		total_points += char_point
 	}
 	log.Println(total_points)
 	// PART 2: 2604
