@@ -6,13 +6,9 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-)
 
-func Log_Error(err error) {
-	if err != nil {
-		log.Panic(err)
-	}
-}
+	"aoc2022/helpers"
+)
 
 func ReadInput(file string) ([]string, error) {
 	content, err := os.ReadFile(file)
@@ -23,16 +19,16 @@ func ReadInput(file string) ([]string, error) {
 
 func main() {
 
-	data, err := ReadInput("input1.test")
+	data, err := ReadInput("inputs/input1.test")
 	//data, err := ReadInput("input1.txt")
-	Log_Error(err)
+	helpers.HandleError(err)
 	calories_list := []int{}
 	total_calories := 0
 	max_calory := total_calories
 	for _, d := range data {
 		if d != "" {
 			calories, err := strconv.Atoi(d)
-			Log_Error(err)
+			helpers.HandleError(err)
 			total_calories += calories
 		} else {
 			calories_list = append(calories_list, total_calories)

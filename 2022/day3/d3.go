@@ -2,15 +2,10 @@ package main
 
 import (
 	"log"
-	"os"
 	"strings"
-)
 
-func HandleError(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+	"aoc2022/helpers"
+)
 
 func CharToPoints(char byte) int {
 	char_point := char
@@ -23,10 +18,8 @@ func CharToPoints(char byte) int {
 }
 
 func main() {
-	file, err := os.ReadFile("input3.txt")
-	HandleError(err)
-	file_content := strings.Split(string(file), "\n")
-	file_content = file_content[:len(file_content)-1]
+	file_content, err := helpers.ReadInput("inputs/input3.test")
+	helpers.HandleError(err)
 
 	total_points := 0
 	for _, compartment := range file_content {

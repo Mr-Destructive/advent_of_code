@@ -4,18 +4,15 @@ import (
 	"log"
 	"os"
 	"strings"
-)
 
-func LogError(err error) {
-	if err != nil {
-		log.Panic(err)
-	}
-}
+	"aoc2022/helpers"
+)
 
 func ReadInput(file string) ([]string, error) {
 	content, err := os.ReadFile(file)
 	file_content := string(content)
 	data := strings.Split(file_content, "\n")
+	data = data[:len(data)-1]
 	return data, err
 }
 
@@ -104,16 +101,15 @@ func GetMoveScore(opt_ply []string) int {
 }
 
 func main() {
-	data, err := ReadInput("input2.test")
+	data, err := ReadInput("inputs/input2.test")
 	//data, err := ReadInput("input1.txt")
-	LogError(err)
+	helpers.HandleError(err)
 	log.Println(data)
 	// Rock    -> A  X
 	// Paper   -> B  Y
 	// Scissor -> C  Z
 	base_points := []int{}
 	total_points := 0
-	data = data[:len(data)-1]
 	// PART 1
 	for _, j := range data {
 		round := strings.Split(j, " ")

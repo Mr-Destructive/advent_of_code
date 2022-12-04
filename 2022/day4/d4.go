@@ -2,22 +2,15 @@ package main
 
 import (
 	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"aoc2022/helpers"
 )
 
-func HandleError(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func main() {
-	file, err := os.ReadFile("input4.txt")
-	HandleError(err)
-	file_content := strings.Split(string(file), "\n")
-	file_content = file_content[:len(file_content)-1]
+	file_content, err := helpers.ReadInput("inputs/input4.test")
+	helpers.HandleError(err)
 	part_1, part_2 := 0, 0
 	for _, assignments := range file_content {
 		assgmnts := strings.Split(assignments, ",")
