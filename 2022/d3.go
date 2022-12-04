@@ -22,18 +22,6 @@ func CharToPoints(char byte) int {
 	return int(char_point)
 }
 
-func GetCommonChars(s1, s2 string) string {
-	common_chars := ""
-	for _, s := range s1 {
-		for _, p := range s2 {
-			if s == p && !strings.Contains(common_chars, string(s)) {
-				common_chars += string(s)
-			}
-		}
-	}
-	return common_chars
-}
-
 func main() {
 	file, err := os.ReadFile("input3.txt")
 	HandleError(err)
