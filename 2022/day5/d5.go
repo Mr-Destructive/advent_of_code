@@ -40,10 +40,10 @@ func transpose(slice [][]string) [][]string {
 }
 
 func main() {
-	file, err := os.ReadFile("input5.txt")
+	file, err := os.ReadFile("inputs/input5.test")
 	file_content := strings.Split(string(file), "\n\n")
 	helpers.HandleError(err)
-	number_of_stacks := 9
+	number_of_stacks := 3
 	lines := strings.Split(file_content[0], "\n")
 	//stacks := len(strings.Split(lines[len(lines)-3], "  "))
 	stack_list := [][]string{}
@@ -54,19 +54,12 @@ func main() {
 		}
 		stack_list = append(stack_list, stack)
 	}
-	stack_list = stack_list[:number_of_stacks-1] //-1]
+	stack_list = stack_list[:number_of_stacks] //-1]
 	log.Println(stack_list)
 	new_stack_list := [][]string{}
 	new_stack_list = append(new_stack_list, stack_list...)
-	for i, _ := range new_stack_list[:(len(stack_list)/2)+1] {
-		for j, _ := range stack_list[i] {
-			if j > i {
-				//if j < 8 {
-				new_stack_list[i][j], new_stack_list[j][i] = new_stack_list[j][i], new_stack_list[i][j]
-			}
-		}
-	}
 	new_stack_list = transpose(new_stack_list)
+
 	log.Println(new_stack_list)
 	for i := 0; i < len(new_stack_list); i++ {
 		for j := 0; j < len(new_stack_list[i]); j++ {
@@ -76,7 +69,6 @@ func main() {
 				i = 0
 			}
 		}
-		new_stack_list[i] = reverse(new_stack_list[i])
 	}
 	log.Println(new_stack_list)
 
@@ -84,15 +76,21 @@ func main() {
 	commands = commands[:len(commands)-1]
 	for _, line := range commands {
 		crates, from, to := Get_Move_Commands(string(line))
-		for n := 0; n < crates; n++ {
-			last_elem := len(new_stack_list[from]) - 1
-			new_stack_list[to] = append(new_stack_list[to], new_stack_list[from][last_elem])
-			if len(new_stack_list[from]) > 0 {
-				new_stack_list[from] = append(new_stack_list[from][:last_elem], new_stack_list[from][last_elem+1:]...)
-			} else {
-				new_stack_list[from] = new_stack_list[from][0:]
-			}
+		//for n := 0; n < crates; n++ {
+		//last_elem := len(new_stack_list[from]) - 1
+		reversed_crates := reverse(new_stack_list[from][:crates])
+		new_stack_list[to] = append(new_stack_list[to], new_stack_list[from][:crates]...)
+		//new_stack_list[to] = append(reversed_crates, new_stack_list[to]...)
+		if len(new_stack_list[from]) > 0 {
+			log.Println(reversed_crates)
+			//new_stack_list[from] = append(new_stack_list[from][:crates-1], new_stack_list[from][crates:]...)
+			new_stack_list[from] = append(new_stack_list[from][:crates-1], new_stack_list[from][crates:]...)
+		} else {
+			//new_stack_list[from] = new_stack_list[from][:crates-1]
+			new_stack_list[from] = append(new_stack_list[from], reversed_crates...)
 		}
+		//}
+		log.Println(crates, new_stack_list)
 	}
 	log.Println(new_stack_list)
 	for _, line := range new_stack_list {
