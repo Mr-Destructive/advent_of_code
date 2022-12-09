@@ -50,6 +50,7 @@ func scenic_score(file []string, x, y, rows int) int {
 	ur, dr, rc, lc := 0, 0, 0, 0
 	scenic_score := 0
 	block_r, block_l, block_u, block_d := false, false, false, false
+	// Upper Column
 	for i := x - 1; i >= 0; i-- {
 		if file[x][y] > file[i][y] && !block_u {
 			ur++
@@ -58,6 +59,7 @@ func scenic_score(file []string, x, y, rows int) int {
 			block_u = true
 		}
 	}
+	// Down Column
 	for i := x + 1; i < rows; i++ {
 		if file[x][y] > file[i][y] && !block_d {
 			dr++
@@ -66,6 +68,7 @@ func scenic_score(file []string, x, y, rows int) int {
 			block_d = true
 		}
 	}
+	// Left of the Row
 	for j := y - 1; j >= 0; j-- {
 		if file[x][y] > file[x][j] && !block_l {
 			lc++
@@ -74,6 +77,7 @@ func scenic_score(file []string, x, y, rows int) int {
 			block_l = true
 		}
 	}
+	// Right of the row
 	for j := y + 1; j < rows; j++ {
 		if file[x][y] > file[x][j] && !block_r {
 			rc++
@@ -97,7 +101,6 @@ func main() {
 	max_scenic_score := 0
 	for n := 1; n < rows-1; n++ {
 		for i := 1; i < rows-1; i++ {
-			//log.Println("f", n, i, string(file[n][i]))
 			val := check_trees(file, n, i, rows)
 			if val {
 				score := scenic_score(file, n, i, rows)
@@ -110,7 +113,10 @@ func main() {
 		}
 	}
 	total_trees = inside_trees + border_count
+	// PART 1
 	log.Println(total_trees)
+
+	// PART 2
 	log.Println(scenic_score_list)
 	log.Println(max_scenic_score)
 }
