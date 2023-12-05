@@ -15,34 +15,37 @@ func ReadInput(file string) ([]string, error) {
 }
 
 func replaceWordsToDigits(line string) string {
-	return ""
-
+	words := map[string]string{
+		"zero": "0", "one": "1", "two": "2", "three": "3", "four": "4",
+		"five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9",
+	}
+	for word := range words {
+		lastPos := strings.LastIndex(line, word)
+		if lastPos != -1 {
+			line = line[:lastPos] + words[word] + line[lastPos+len(word):]
+		}
+	}
+	return line
 }
 
 func getDigits(line string) int {
 	str := ""
 	n := len(line)
-	for _, ch := range line {
-		if ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' || ch == '5' || ch == '6' || ch == '7' || ch == '8' || ch == '9' {
-			str += string(ch)
-			break
-		}
-	}
-	for i := n - 1; i >= 0; i-- {
-		ch := line[i]
-		if ch == '0' || ch == '1' || ch == '2' || ch == '3' || ch == '4' || ch == '5' || ch == '6' || ch == '7' || ch == '8' || ch == '9' {
-			str += string(ch)
-			break
-		}
-	}
-	fmt.Println(str)
 
+	for i := 0; i < n; i++ {
+		ch := line[i]
+		if ch >= '0' && ch <= '9' {
+			str += string(ch)
+		} else if len(str) > 0 {
+			break
+		}
+	}
 	res, _ := strconv.Atoi(str)
 	return res
 }
 
 func main() {
-	data, err := ReadInput("part1.test")
+	data, err := ReadInput("../inputs/test/d01-2.txt")
 	if err != nil {
 		panic(err)
 	}
