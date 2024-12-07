@@ -55,10 +55,8 @@ func SplitLists(lines []string) ([]int, []int) {
 	return listOne, listTwo
 }
 
-func SplitListsAndMap(lines []string) ([]int, []int, map[int]int, map[int]int) {
+func SplitListsAndMap(lines []string) ([]int, map[int]int) {
 	listOne := []int{}
-	listTwo := []int{}
-	listOneCounts := make(map[int]int)
 	listTwoCounts := make(map[int]int)
 
 	for _, line := range lines {
@@ -71,12 +69,10 @@ func SplitListsAndMap(lines []string) ([]int, []int, map[int]int, map[int]int) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		listOneCounts[numOne] += 1
 		listTwoCounts[numTwo] += 1
 		listOne = append(listOne, numOne)
-		listTwo = append(listTwo, numTwo)
 	}
-	return listOne, listTwo, listOneCounts, listTwoCounts
+	return listOne, listTwoCounts
 }
 
 func CreateNumberMap(listOne []int, mapTwo map[int]int) ([]int, int) {
@@ -86,7 +82,6 @@ func CreateNumberMap(listOne []int, mapTwo map[int]int) ([]int, int) {
 		score := numOne * mapTwo[numOne]
 		scoreList = append(scoreList, score)
 		similarityScore += score
-
 	}
 	return scoreList, similarityScore
 }
@@ -97,13 +92,14 @@ func PartOne(lines []string) int {
 	sort.Ints(listTwo)
 	totalScore := 0
 	for i := range listOne {
-		totalScore += int(math.Abs(float64(listOne[i]) - float64(listTwo[i])))
+		totalScore += int(math.Abs(float64(listOne[i] - listTwo[i])))
 	}
 	return totalScore
 }
 
 func PartTwo(lines []string) int {
-	listOne, _, _, mapTwo := SplitListsAndMap(lines)
+	listOne, mapTwo := SplitListsAndMap(lines)
+    fmt.Println(listOne, mapTwo)
 	_, similarityScore := CreateNumberMap(listOne, mapTwo)
 	return similarityScore
 }
