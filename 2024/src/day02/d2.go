@@ -75,6 +75,7 @@ func RemoveAndCheck(report []int, index int) bool {
 	reportNew := append([]int{}, report[:index]...)
 	reportNew = append(reportNew, report[index+1:]...)
 	safe, _ := IsSafe(reportNew)
+	fmt.Println(safe, report)
 	return safe
 }
 
@@ -97,21 +98,21 @@ func RemoveLevels(report []int) bool {
 }
 
 func main() {
-	lines := ReadFileLines("../../inputs/day02/sample.txt")
+	lines := ReadFileLines("../../inputs/day02/prod.txt")
 	reportLevels := SplitLevels(lines)
-	safeCount1 := 0
+	safeCount := 0
 	for _, report := range reportLevels {
 		if ok, _ := IsSafe(report); ok {
-			safeCount1++
+			safeCount++
 		}
 	}
-	fmt.Println(safeCount1)
-	safeCount2 := 0
+	//fmt.Println(safeCount)
+	safeCount = 0
 	for _, report := range reportLevels {
 		if RemoveLevels(report) {
-			safeCount2++
+			safeCount++
 		}
 	}
-	fmt.Println(safeCount2)
+	fmt.Println(safeCount)
 
 }

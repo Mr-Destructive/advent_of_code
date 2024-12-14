@@ -36,6 +36,7 @@ func ConstructGrid(lines []string) [][]string {
 		}
 		grid = append(grid, row)
 	}
+	fmt.Println(grid)
 	return grid
 }
 
@@ -121,7 +122,7 @@ func TraverseGrid(grid [][]string) int {
 }
 
 func main() {
-	lines := ReadFileLines("../../inputs/day04/prod.txt")
+	lines := ReadFileLines("../../inputs/day04/sample.txt")
 	grid := ConstructGrid(lines)
 	//score := TraverseGrid(grid)
 	score := TraverseGrid2(grid)
