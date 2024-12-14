@@ -63,7 +63,7 @@ func FindTokens(equations [][]point, offset int) int {
 }
 
 func main() {
-	lines := helpers.ReadFileLines("../inputs/day13/input.txt")
+	lines := helpers.ReadFileSections("../inputs/day13/input.txt")
 	machines := ParseMachines(lines)
 	score1 := FindTokens(machines, 0)
 	fmt.Println(score1)

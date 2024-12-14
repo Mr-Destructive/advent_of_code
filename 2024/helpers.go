@@ -24,3 +24,19 @@ func ReadFileLines(path string) []string {
 	}
 	return lines
 }
+
+func ReadFileSections(path string) [][]string {
+	fileBytes := ReadFileBytes(path)
+	lines := [][]string{}
+	separator := []byte("\n\n")
+	for _, section := range bytes.Split(fileBytes, separator) {
+		str := []string{}
+		if string(section) != "" {
+			for _, line := range bytes.Split(section, []byte("\n")) {
+				str = append(str, string(line))
+			}
+			lines = append(lines, str)
+		}
+	}
+	return lines
+}
